@@ -1,0 +1,7 @@
+[package]
+name = "batcharge"
+version = "0.1.0"
+authors = ["awright <awright@freelancer.com>"]
+
+[dependencies]
+colored = "1.6"
