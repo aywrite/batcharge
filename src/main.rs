@@ -49,8 +49,8 @@ fn main() {
     };
 
     let symbol = match is_charging {
-        true => "↯",
-        false => "⚠",
+        true => "%{[32m%}↯%{[00m%}",
+        false => "%{[33m%}⚠%{[00m%}",
     };
 
     let out = format!(
@@ -58,8 +58,8 @@ fn main() {
         color,
         "◼".repeat(filled),
         "◻".repeat(empty),
+        color_reset,
         symbol,
-        color_reset
     );
     io::stdout().write(out.as_bytes()).ok();
 }
