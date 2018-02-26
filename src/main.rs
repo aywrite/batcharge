@@ -28,13 +28,18 @@ fn main() {
         .collect::<String>()
         .parse()
         .unwrap();
+    let is_charging = bat_info
+        .lines()
+        .find(|x| x.contains("IsCharging"))
+        .unwrap()
+        .contains("Yes");
 
     let charge = cur_cap / max_cap;
-    let charge_threshold = (10.0 * charge) as usize;
+    let charge_threshold = (10.0 * charge).ceil();
 
-    let total_slots = 10;
-    let filled = charge_threshold * (total_slots / 10);
-    let empty = total_slots - filled;
+    let total_slots = 10.0;
+    let filled = (charge_threshold * (total_slots / 10.0)).ceil() as usize;
+    let empty = total_slots as usize - filled;
 
     let color_reset = "%{[00m%}";
     let color = match filled {
@@ -43,11 +48,17 @@ fn main() {
         _ => "%{[32m%}",     // green
     };
 
+    let symbol = match is_charging {
+        true => "↯",
+        false => "⚠",
+    };
+
     let out = format!(
-        "{}{}{}{}",
+        "{}{}{} {}{}",
         color,
         "◼".repeat(filled),
         "◻".repeat(empty),
+        symbol,
         color_reset
     );
     io::stdout().write(out.as_bytes()).ok();
