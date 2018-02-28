@@ -30,7 +30,7 @@ fn main() {
         .unwrap();
     let is_charging = bat_info
         .lines()
-        .find(|x| x.contains("IsCharging"))
+        .find(|x| x.contains("ExternalConnected"))
         .unwrap()
         .contains("Yes");
 
